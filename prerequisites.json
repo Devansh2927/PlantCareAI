@@ -1,0 +1,8 @@
+﻿{
+  "prerequisites": [
+    "requirements.txt",
+    "environment.yml",
+    "README.md"
+  ],
+  "status": "step1-complete"
+}
