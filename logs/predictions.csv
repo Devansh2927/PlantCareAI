@@ -1,0 +1,11 @@
+timestamp,filename,prediction,confidence,top1,top2,top3
+2026-03-04T17:50:45.538833Z,0a5e9323-dbad-432d-ac58-d291718345d9___FREC_Scab_3417_90deg.JPG,Apple___Apple_scab,0.8006958961486816,Apple___Apple_scab,Apple___Cedar_apple_rust,Orange___Haunglongbing_(Citrus_greening)
+2026-03-04T17:53:38.249382Z,0a769a71-052a-4f19-a4d8-b0f0cb75541c___FREC_Scab_3165.JPG,Apple___Apple_scab,0.5696805715560913,Apple___Apple_scab,Cherry_(including_sour)___healthy,Apple___Black_rot
+2026-03-04T18:19:09.265968Z,1b1004c8-99e9-4c85-8fe5-b1c11d558cf8___FREC_Scab_3300.JPG,Apple___healthy,0.4683311879634857,Apple___healthy,Apple___Apple_scab,Cherry_(including_sour)___healthy
+2026-03-04T18:19:27.654111Z,0a14783a-838a-4d4f-a671-ff98011714c6___FREC_Scab_3288_new30degFlipLR.JPG,Apple___Apple_scab,0.9205436706542969,Apple___Apple_scab,Apple___Cedar_apple_rust,Apple___Black_rot
+2026-03-04T18:27:17.486374Z,0a769a71-052a-4f19-a4d8-b0f0cb75541c___FREC_Scab_3165.JPG,Apple___Apple_scab,0.5696811676025391,Apple___Apple_scab,Cherry_(including_sour)___healthy,Apple___Black_rot
+2026-03-04T18:27:55.624733Z,1f97d75c-db85-4344-8687-82ca56454d17___FREC_Scab_3408.JPG,Apple___Apple_scab,0.7065718173980713,Apple___Apple_scab,Potato___Late_blight,Apple___Cedar_apple_rust
+2026-03-04T18:37:45.795073Z,0a14783a-838a-4d4f-a671-ff98011714c6___FREC_Scab_3288_270deg.JPG,Apple___healthy,0.6098150610923767,Apple___healthy,Apple___Apple_scab,Cherry_(including_sour)___healthy
+2026-03-04T18:41:45.939286Z,0a14783a-838a-4d4f-a671-ff98011714c6___FREC_Scab_3288_270deg.JPG,Apple___healthy,0.609814465045929,Apple___healthy,Apple___Apple_scab,Cherry_(including_sour)___healthy
+2026-03-04T18:42:33.340160Z,2ae81857-0615-4a6a-8d13-1ace0c62284d___FREC_Scab_2992_new30degFlipLR.JPG,Apple___Apple_scab,0.9878503680229187,Apple___Apple_scab,Apple___Cedar_apple_rust,Cherry_(including_sour)___healthy
+2026-03-04T18:43:06.754397Z,0a68b3a9-e38f-45b5-8664-9c60e557a41d___JR_HL_9511.JPG,Cherry_(including_sour)___healthy,0.9578022956848145,Cherry_(including_sour)___healthy,Orange___Haunglongbing_(Citrus_greening),"Pepper,_bell___healthy"

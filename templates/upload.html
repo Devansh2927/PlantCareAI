@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PlantCare — Upload & Predict</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Color palette & variables ---------- */
+    :root{
+      --bg-1: #0f1724;         /* deep navy */
+      --bg-2: #071025;         /* darker gradient end */
+      --card-1: rgba(255,255,255,0.04);
+      --glass: rgba(255,255,255,0.03);
+      --accent-a: #7ee7c7;     /* mint */
+      --accent-b: #6ea8fe;     /* sky */
+      --accent-contrast: #042033;
+      --danger: #ff6b6b;
+      --muted: #9fb0c8;
+      --radius: 14px;
+    }
+
+    /* ---------- Base layout ---------- */
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial;color:#eaf6ff;background:linear-gradient(180deg,var(--bg-1),var(--bg-2));-webkit-font-smoothing:antialiased;}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box;}
+
+    /* ---------- Main panel ---------- */
+    .panel{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr 380px;
+      gap:28px;
+      padding:28px;
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 20px 60px rgba(2,6,23,0.6);
+      transform: translateY(0);
+      animation: panelIn 420ms cubic-bezier(.2,.9,.2,1);
+    }
+    @keyframes panelIn { from { transform: translateY(18px); opacity:0 } to { transform: translateY(0); opacity:1 } }
+
+    /* ---------- Left column ---------- */
+    .left h1{margin:0;font-size:22px;font-weight:800;color:#f8fbff;letter-spacing:-0.2px;}
+    .lead{margin-top:6px;color:var(--muted);font-size:14px;}
+    .controls{margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+    label.small{display:block;color:var(--muted);font-size:13px;margin-top:14px;}
+
+    /* ---------- Buttons ---------- */
+    .btn{
+      padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:700;font-size:14px;
+      transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.45);
+    }
+    .btn:active{transform:translateY(1px);}
+    .btn-primary{
+      background: linear-gradient(90deg,var(--accent-a), var(--accent-b));
+      color: var(--accent-contrast);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .btn-ghost{
+      background: transparent; color: #dff6ff; border: 1px solid rgba(255,255,255,0.06);
+    }
+    .btn-danger{
+      background: linear-gradient(90deg,#ff8a8a,#ff6b6b); color:#fff;
+    }
+
+    /* ---------- Right column (preview) ---------- */
+    .preview{
+      width:360px;height:360px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03); display:flex;align-items:center;justify-content:center;overflow:hidden;
+      box-shadow: 0 18px 50px rgba(2,6,23,0.6);
+    }
+    .preview img{max-width:100%;max-height:100%;border-radius:8px;display:block;transition: transform 260ms ease; }
+    .preview img:hover{transform: scale(1.02);}
+
+    /* ---------- Prediction card ---------- */
+    .prediction{margin-top:18px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02);}
+    .prediction h3{margin:0;font-size:16px;color:#eaf6ff;font-weight:700;}
+    .prediction .label{font-size:18px;font-weight:800;color:#fff;margin-top:8px;}
+    .prediction .confidence{color:var(--muted);font-size:13px;margin-left:8px;}
+    ul.topk{margin:8px 0 0 18px;color:var(--muted);font-size:14px;line-height:1.6;}
+
+    /* ---------- Modal (centered) ---------- */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:1200;}
+    .modal.show{display:flex;}
+    .modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,0.6);backdrop-filter: blur(6px);opacity:0;animation:fadeIn 220ms forwards;}
+    @keyframes fadeIn{to{opacity:1}}
+    .modal-card{position:relative;width:100%;max-width:720px;border-radius:12px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(2,6,23,0.7);transform:translateY(18px) scale(.98);opacity:0;animation:modalIn 320ms cubic-bezier(.2,.9,.2,1) forwards;}
+    @keyframes modalIn{to{transform:translateY(0) scale(1);opacity:1}}
+
+    .modal-header{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .modal-title{font-size:18px;font-weight:800;color:#f8fbff;}
+    .modal-body{margin-top:12px;color:var(--muted);line-height:1.6;font-size:15px;}
+
+    /* X button */
+    .close-x{width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);transition:transform 140ms ease;}
+    .close-x:hover{transform:rotate(10deg) scale(1.03);}
+
+    /* responsive */
+    @media (max-width:980px){
+      .panel{grid-template-columns: 1fr; padding:18px;}
+      .preview{width:280px;height:280px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel" role="main" aria-labelledby="app-title">
+      <div class="left">
+        <h1 id="app-title">PlantCare</h1>
+        <div class="lead">Upload a clear photo of the affected leaf. We'll predict the issue and offer treatment advice.</div>
+
+        <label class="small" for="file-input">Choose an image (max 16 MB)</label>
+        <input id="file-input" type="file" accept="image/*" />
+
+        <div class="controls">
+          <!-- Prediction button placed prominently -->
+          <button id="upload-btn" class="btn btn-primary">Upload & Predict</button>
+
+          <!-- Advice button appears after prediction -->
+          <button id="btn-advice" class="btn btn-ghost" style="display:none;">Treatment Advice</button>
+
+          <!-- Report button appears after prediction -->
+          <button id="btn-report" class="btn btn-danger" style="display:none;">Report Wrong Result</button>
+
+          <span id="upload-status" class="muted" style="margin-left:8px;"></span>
+        </div>
+
+        <div id="prediction-area" class="prediction" style="display:none;">
+          <h3>Prediction</h3>
+          <div class="label"><span id="pred-label">—</span> <span id="pred-confidence" class="confidence"></span></div>
+          <div style="margin-top:10px;">
+            <strong style="color:var(--muted);font-size:13px;">Top 3</strong>
+            <ul id="topk-list" class="topk"></ul>
+          </div>
+          <div id="preprocess-info" class="muted" style="margin-top:10px;font-size:13px;"></div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="preview" id="preview-box">
+          <span class="muted">No image selected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="advice-modal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" id="modal-backdrop"></div>
+    <div class="modal-card" role="document" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div>
+          <div id="modal-title" class="modal-title">Treatment Advice</div>
+          <div id="modal-sub" class="muted" style="font-size:13px;">Guidance to help treat the issue</div>
+        </div>
+        <div>
+          <button id="modal-close-x" class="close-x" title="Close advice" aria-label="Close advice">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#eaf6ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="modal-body" class="modal-body"></div>
+
+      <div id="report-form" style="display:none;margin-top:12px;">
+        <label for="report-comment" class="muted">Tell us what was wrong (optional):</label>
+        <textarea id="report-comment" rows="4" placeholder="Describe the issue..."></textarea>
+        <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
+          <button id="report-submit" class="btn btn-primary">Submit Report</button>
+          <button id="modal-close" class="btn btn-ghost">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
