@@ -1,8 +1,17 @@
-__pycache__/
+# ignore dataset folder
+dataset/
+# or a specific path
+data/images/
+# ignore any large binary types you don't want in repo due to large in size
+*.tar.gz
+*.h5
+
+# Local data and runtime files
+dataset/
+retrain/
+uploads/
+server.log
+logs/reports.csv
 *.pyc
-.env
-venv/
-models/*.h5
-data/raw/
-data/processed/
-*.log
+__pycache__/
+models/__pycache__/

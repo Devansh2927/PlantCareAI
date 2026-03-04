@@ -9,3 +9,5 @@ timestamp,filename,prediction,confidence,top1,top2,top3
 2026-03-04T18:41:45.939286Z,0a14783a-838a-4d4f-a671-ff98011714c6___FREC_Scab_3288_270deg.JPG,Apple___healthy,0.609814465045929,Apple___healthy,Apple___Apple_scab,Cherry_(including_sour)___healthy
 2026-03-04T18:42:33.340160Z,2ae81857-0615-4a6a-8d13-1ace0c62284d___FREC_Scab_2992_new30degFlipLR.JPG,Apple___Apple_scab,0.9878503680229187,Apple___Apple_scab,Apple___Cedar_apple_rust,Cherry_(including_sour)___healthy
 2026-03-04T18:43:06.754397Z,0a68b3a9-e38f-45b5-8664-9c60e557a41d___JR_HL_9511.JPG,Cherry_(including_sour)___healthy,0.9578022956848145,Cherry_(including_sour)___healthy,Orange___Haunglongbing_(Citrus_greening),"Pepper,_bell___healthy"
+2026-03-04T19:15:26.414800Z,0c5b14d9-8b1c-4c39-bb23-1835b5760caa___RS_Early.B_7937.JPG,Potato___Early_blight,0.9759366512298584,Potato___Early_blight,"Pepper,_bell___Bacterial_spot",Potato___Late_blight
+2026-03-04T19:15:50.514479Z,0a14783a-838a-4d4f-a671-ff98011714c6___FREC_Scab_3288_90deg.JPG,Apple___Apple_scab,0.5795839428901672,Apple___Apple_scab,Apple___healthy,Cherry_(including_sour)___healthy
